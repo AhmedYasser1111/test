@@ -11,8 +11,7 @@ public class User {
     private String profilePictureUrl; //4aklaha m4 ht4t8all nnn
     private Date birthdate;
     private ArrayList<String> ListOfFriends = new ArrayList<String>();
-    int y;
-    int x;
+    
 
     public User(String name, String email, String username, String password, String profilePictureUrl, Date birthdate) {
         this.name = name;
