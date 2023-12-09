@@ -15,6 +15,7 @@ public class User {
     private Date birthdate;
    // private ArrayList<String> ListOfFriends = new ArrayList<String>();
     List<User> ListOfFriends;
+    private ArrayList followedPages= new ArrayList<>();
 
 
     public User(String Firstname,String Lastname, String email, String username, String password, String Confirmpassword )
@@ -30,7 +31,7 @@ public class User {
         ArrayList<String> listOfPosts = new ArrayList<>();
         this.ListOfFriends = new ArrayList<>();
         ArrayList<String> listOfConversations = new ArrayList<>();
-
+        this.followedPages = new ArrayList<>();
     }
 
     public String getFisrtname() {
@@ -193,8 +194,24 @@ public class User {
             System.out.println("Friend added: " + friend.getUsername());
         }
     }
+    public void followPage(Page page) {
+        if (!this.followedPages.contains(page)) {
+            this.followedPages.add(page);
+        }
+    }
+
+    public List<Page> getFollowedPages() {
+        return this.followedPages;
+    }
+
+
+
+
+       // return username;
 
 }
+
+
 
 
 
