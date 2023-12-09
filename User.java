@@ -2,21 +2,24 @@
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class User {
-    private String Fisrtname;
+    private String Firstname;
     private String Lastname;
     private String email;
     private String username;
     private String password;
     private String Confirmpassword;
-    private String profilePictureUrl; //4aklaha m4 ht4t8all nnn
+    private static String profilePictureUrl=" "; //4aklaha m4 ht4t8all nnn
     private Date birthdate;
-    private ArrayList<String> ListOfFriends = new ArrayList<String>();
+   // private ArrayList<String> ListOfFriends = new ArrayList<String>();
+    List<User> ListOfFriends;
 
 
-    public User(String Fisrtname, String Lastname, String email, String username, String password, String Confirmpassword, String profilePictureUrl, Date birthdate) {
-        this.Fisrtname = Firstname;
+    public User(String Firstname,String Lastname, String email, String username, String password, String Confirmpassword )
+    {
+        this.Firstname = Firstname;
         this.Lastname = Lastname;
         this.email = email;
         this.username = username;
@@ -31,7 +34,7 @@ public class User {
     }
 
     public String getFisrtname() {
-        return Fisrtname;
+        return Firstname;
     }
 
     public void setFisrtname(String Fisrtname) {
@@ -85,9 +88,9 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public ArrayList<String> getListOfFriends() {
+    /*public ArrayList<String> getListOfFriends() {
         return ListOfFriends;
-    }
+    }*/
 
     public Date getBirthdate() {
         return birthdate;
@@ -97,9 +100,9 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public void setListOfFriends(ArrayList<String> listOfFriends) {
+    /*public void setListOfFriends(ArrayList<String> listOfFriends) {
         ListOfFriends = listOfFriends;
-    }
+    }*/
     /*public void addFriend(User friend) {
         friends.add(friend);
     }
@@ -111,11 +114,13 @@ public class User {
         posts.remove(post);
     }
 
-    public static User createAccount(String Fisrtname, String username, String password, String email, Date birthdate){
+    public static User createAccount(String Firstname, String Lastname, String username, String password, String email, Date birthdate){
         if (username == null || password == null || Firstname == null || email == null || profilePictureUrl == null) {
             throw new IllegalArgumentException("All parameters are required");
         }
-        return new User(username, password, Firstname, Lastname, email, profilePictureUrl);
+        User user = new User(username, password, Firstname, Lastname, email, profilePictureUrl);
+        User user1 = user;
+        return user1;
 
 
     }
@@ -147,15 +152,30 @@ public class User {
     public void likeComment(Comment comment) {
         comment.addLike(this); //add user to the list of likes (this represents the user)
     }
-    public void likePost(Post post) {
+    /*public void likePost(Post post) {
         post.addLike(this);
-    }
+    }*/
     public void seeFriendsPosts() {
+       // User[] friendList;
+        if (ListOfFriends.isEmpty()) {
+            System.out.println("You have no friends to see posts from.");
+            return;
+        }
+
+        System.out.println("Posts from friends:");
+
         for (User friend : ListOfFriends) {
             System.out.println("Posts from " + friend.getUsername() + ":");
-            for (Post friendPost : friend.getPosts()) {
-                System.out.println(" - " + friendPost.getMessage());
+            List<Post> friendPosts = friend.getPosts();
+
+            if (friendPosts.isEmpty()) {
+                System.out.println(" - No posts from " + friend.getUsername());
+            } else {
+                for (Post friendPost : friendPosts) {
+                    System.out.println(" - " + friendPost.getMessage());
+                }
             }
+
             System.out.println(); // Separate friend posts
         }
     }
@@ -163,6 +183,15 @@ public class User {
         Page page = new Page(pageTitle, pageDescription, this);
         pages.add(page);
         System.out.println("Page created: " + pageTitle);
+    }
+    public void searchAddFriends(User friend) {
+        if (ListOfFriends.contains(friend) || friend.equals(this)) {
+            System.out.println("User not found or already a friend.");
+        } else {
+            ListOfFriends.add(friend);
+            friend.ListOfFriends.add(this); // Add reciprocal friendship
+            System.out.println("Friend added: " + friend.getUsername());
+        }
     }
 
 }
