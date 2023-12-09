@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
-    private String name;
+    private String Fisrtname;
+    private String Lastname;
     private String email;
     private String username;
     private String password;
+    private String Confirmpassword;
     private String profilePictureUrl; //4aklaha m4 ht4t8all nnn
     private Date birthdate;
     private ArrayList<String> ListOfFriends = new ArrayList<String>();
-    
 
-    public User(String name, String email, String username, String password, String profilePictureUrl, Date birthdate) {
-        this.name = name;
+
+    public User(String Fisrtname, String Lastname, String email, String username, String password, String Confirmpassword, String profilePictureUrl, Date birthdate) {
+        this.Fisrtname = Firstname;
+        this.Lastname = Lastname;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.Confirmpassword = Confirmpassword;
         this.profilePictureUrl = profilePictureUrl;
         this.birthdate = birthdate;
         ArrayList<String> listOfPosts = new ArrayList<>();
@@ -26,12 +30,20 @@ public class User {
 
     }
 
-    public String getName() {
-        return name;
+    public String getFisrtname() {
+        return Fisrtname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFisrtname(String Fisrtname) {
+        Fisrtname = Fisrtname;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String Lastname) {
+        Lastname = Lastname;
     }
 
     public String getEmail() {
@@ -56,6 +68,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getConfirmpassword() {
+        return Confirmpassword;
+    }
+
+    public void setConfirmpassword(String Confirmpassword) {
+        Confirmpassword = Confirmpassword;
+    }
+
     public String getProfilePictureUrl() {
         return profilePictureUrl;
     }
@@ -90,11 +111,11 @@ public class User {
         posts.remove(post);
     }
 
-    public static User createAccount(String name, String username, String password, String email, Date birthdate){
-        if (username == null || password == null || name == null || email == null || profilePictureUrl == null) {
+    public static User createAccount(String Fisrtname, String username, String password, String email, Date birthdate){
+        if (username == null || password == null || Firstname == null || email == null || profilePictureUrl == null) {
             throw new IllegalArgumentException("All parameters are required");
         }
-        return new User(username, password, name, email, profilePictureUrl);
+        return new User(username, password, Firstname, Lastname, email, profilePictureUrl);
 
 
     }
