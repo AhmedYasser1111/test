@@ -2,37 +2,52 @@
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class User {
-    private String name;
+    private String Firstname;
+    private String Lastname;
     private String email;
     private String username;
     private String password;
-    private String profilePictureUrl; //4aklaha m4 ht4t8all nnn
+    private String Confirmpassword;
+    private static String profilePictureUrl=" "; //4aklaha m4 ht4t8all nnn
     private Date birthdate;
-    private ArrayList<String> ListOfFriends = new ArrayList<String>();
-    int y;
-    int x;
+   // private ArrayList<String> ListOfFriends = new ArrayList<String>();
+    List<User> ListOfFriends;
+    private ArrayList followedPages= new ArrayList<>();
 
-    public User(String name, String email, String username, String password, String profilePictureUrl, Date birthdate) {
-        this.name = name;
+
+    public User(String Firstname,String Lastname, String email, String username, String password, String Confirmpassword )
+    {
+        this.Firstname = Firstname;
+        this.Lastname = Lastname;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.Confirmpassword = Confirmpassword;
         this.profilePictureUrl = profilePictureUrl;
         this.birthdate = birthdate;
         ArrayList<String> listOfPosts = new ArrayList<>();
         this.ListOfFriends = new ArrayList<>();
         ArrayList<String> listOfConversations = new ArrayList<>();
-
+        this.followedPages = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getFisrtname() {
+        return Firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFisrtname(String Fisrtname) {
+        Fisrtname = Fisrtname;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String Lastname) {
+        Lastname = Lastname;
     }
 
     public String getEmail() {
@@ -57,6 +72,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getConfirmpassword() {
+        return Confirmpassword;
+    }
+
+    public void setConfirmpassword(String Confirmpassword) {
+        Confirmpassword = Confirmpassword;
+    }
+
     public String getProfilePictureUrl() {
         return profilePictureUrl;
     }
@@ -65,9 +89,9 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public ArrayList<String> getListOfFriends() {
+    /*public ArrayList<String> getListOfFriends() {
         return ListOfFriends;
-    }
+    }*/
 
     public Date getBirthdate() {
         return birthdate;
@@ -77,9 +101,9 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public void setListOfFriends(ArrayList<String> listOfFriends) {
+    /*public void setListOfFriends(ArrayList<String> listOfFriends) {
         ListOfFriends = listOfFriends;
-    }
+    }*/
     /*public void addFriend(User friend) {
         friends.add(friend);
     }
@@ -91,11 +115,13 @@ public class User {
         posts.remove(post);
     }
 
-    public static User createAccount(String name, String username, String password, String email, Date birthdate){
-        if (username == null || password == null || name == null || email == null || profilePictureUrl == null) {
+    public static User createAccount(String Firstname, String Lastname, String username, String password, String email, Date birthdate){
+        if (username == null || password == null || Firstname == null || email == null || profilePictureUrl == null) {
             throw new IllegalArgumentException("All parameters are required");
         }
-        return new User(username, password, name, email, profilePictureUrl);
+        User user = new User(username, password, Firstname, Lastname, email, profilePictureUrl);
+        User user1 = user;
+        return user1;
 
 
     }
@@ -127,15 +153,30 @@ public class User {
     public void likeComment(Comment comment) {
         comment.addLike(this); //add user to the list of likes (this represents the user)
     }
-    public void likePost(Post post) {
+    /*public void likePost(Post post) {
         post.addLike(this);
-    }
+    }*/
     public void seeFriendsPosts() {
+       // User[] friendList;
+        if (ListOfFriends.isEmpty()) {
+            System.out.println("You have no friends to see posts from.");
+            return;
+        }
+
+        System.out.println("Posts from friends:");
+
         for (User friend : ListOfFriends) {
             System.out.println("Posts from " + friend.getUsername() + ":");
-            for (Post friendPost : friend.getPosts()) {
-                System.out.println(" - " + friendPost.getMessage());
+            List<Post> friendPosts = friend.getPosts();
+
+            if (friendPosts.isEmpty()) {
+                System.out.println(" - No posts from " + friend.getUsername());
+            } else {
+                for (Post friendPost : friendPosts) {
+                    System.out.println(" - " + friendPost.getMessage());
+                }
             }
+
             System.out.println(); // Separate friend posts
         }
     }
@@ -144,8 +185,33 @@ public class User {
         pages.add(page);
         System.out.println("Page created: " + pageTitle);
     }
+    public void searchAddFriends(User friend) {
+        if (ListOfFriends.contains(friend) || friend.equals(this)) {
+            System.out.println("User not found or already a friend.");
+        } else {
+            ListOfFriends.add(friend);
+            friend.ListOfFriends.add(this); // Add reciprocal friendship
+            System.out.println("Friend added: " + friend.getUsername());
+        }
+    }
+    public void followPage(Page page) {
+        if (!this.followedPages.contains(page)) {
+            this.followedPages.add(page);
+        }
+    }
+
+    public List<Page> getFollowedPages() {
+        return this.followedPages;
+    }
+
+
+
+
+       // return username;
 
 }
+
+
 
 
 
